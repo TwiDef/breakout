@@ -1,5 +1,6 @@
 const grid = document.querySelector('.grid');
 const scoreDisplay = document.querySelector('#score');
+let score = 0;
 const blockWidth = 100;
 const blockHeight = 20;
 const boardWidth = 1200;
@@ -84,7 +85,6 @@ function moveUser(e) {
                 currentPosition[0] += 20;
                 drawUser();
             }
-
             break;
     }
 }
@@ -101,17 +101,44 @@ function moveBall() {
     drawBall();
     checkForCollosions();
 }
-timerId = setInterval(moveBall, 10);
+timerId = setInterval(moveBall, 20);
 
 function checkForCollosions() {
+    for (let i = 0; i < blocks.length; i++) {
+        if (
+            (ballCurrentPosition[0] > blocks[i].bottomLeft[0] && ballCurrentPosition[0] < blocks[i].bottomRight[0]) && ((ballCurrentPosition[1] + ballDiameter) > blocks[i].bottomLeft[1] && ballCurrentPosition[1] < blocks[i].topLeft[1])
+        ) {
+            const allBlocks = Array.from(document.querySelectorAll('.block'));
+            allBlocks[i].classList.remove('block');
+            blocks.splice(i, 1);
+            changeDirection();
+            score++;
+            scoreDisplay.textContent = score;
+
+            if (blocks.length === 0) {
+                scoreDisplay.textContent = 'You win';
+                clearInterval(timerId);
+                document.removeEventListener('keydown', moveUser);
+            }
+        }
+    }
+
     if (ballCurrentPosition[0] >= (boardWidth - ballDiameter) || ballCurrentPosition[1] >= (boardHeight - ballDiameter) || ballCurrentPosition[0] <= 0) {
         changeDirection();
     }
+
+    if (
+        (ballCurrentPosition[0] > currentPosition[0] && ballCurrentPosition[0] < currentPosition[0] + blockWidth) && (ballCurrentPosition[1] > currentPosition[1] && ballCurrentPosition[1] < currentPosition[1] + blockHeight)
+    ) {
+        changeDirection();
+    }
+
     if (ballCurrentPosition[1] <= 0) {
         clearInterval(timerId);
         scoreDisplay.innerHTML = 'You lose';
         document.removeEventListener('keydown', moveUser);
     }
+
 }
 
 function changeDirection() {
