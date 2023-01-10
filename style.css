@@ -1,0 +1,38 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    height: 100vh;
+    background: url("./img/pixel-space.png") no-repeat;
+    background-size: cover;
+}
+
+.grid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1200px;
+    height: 600px;
+    border: solid black 1px;
+}
+
+.block {
+    position: absolute;
+    width: 120px;
+    height: 20px;
+    background-image: linear-gradient( to right, #fe8c00 0%, #f85b0d 51%, #fe8c00 100%);
+    border-radius: 7px;
+}
+
+.user {
+    position: absolute;
+    width: 120px;
+    height: 20px;
+    background-image: linear-gradient( to right, #c2e59c 0%, #64b3f4 51%, #c2e59c 100%);
+    border-radius: 7px;
+}
