@@ -31,7 +31,7 @@ body {
 
 .user {
     position: absolute;
-    width: 120px;
+    width: 100px;
     height: 20px;
     background-image: linear-gradient( to right, #c2e59c 0%, #64b3f4 51%, #c2e59c 100%);
     border-radius: 7px;
