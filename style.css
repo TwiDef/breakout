@@ -3,6 +3,11 @@ body {
     margin: 0;
 }
 
+#score {
+    color: antiquewhite;
+    font-size: 30px;
+}
+
 .container {
     max-width: 100%;
     margin: 0 auto;
@@ -35,4 +40,12 @@ body {
     height: 20px;
     background-image: linear-gradient( to right, #c2e59c 0%, #64b3f4 51%, #c2e59c 100%);
     border-radius: 7px;
+}
+
+.ball {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-image: linear-gradient( to right, #6190e8 0%, #a7bfe8 51%, #6190e8 100%);
 }

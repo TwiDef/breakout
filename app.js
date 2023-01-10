@@ -1,10 +1,19 @@
 const grid = document.querySelector('.grid');
+const scoreDisplay = document.querySelector('#score');
 const blockWidth = 100;
 const blockHeight = 20;
-const userStart = [540, 10];
 const boardWidth = 1200;
-let currentPosition = userStart;
+const boardHeight = 600;
+const ballDiameter = 20;
 
+let xDirection = 4;
+let yDirection = 4;
+
+const userStart = [540, 10];
+const ballStart = [580, 30];
+let currentPosition = userStart;
+let ballCurrentPosition = ballStart;
+let timerId;
 
 class Block {
     constructor(xAxis, yAxis) {
@@ -57,6 +66,11 @@ function drawUser() {
     user.style.bottom = currentPosition[1] + 'px';
 }
 
+function drawBall() {
+    ball.style.left = ballCurrentPosition[0] + 'px';
+    ball.style.bottom = ballCurrentPosition[1] + 'px';
+}
+
 function moveUser(e) {
     switch (e.key) {
         case 'ArrowLeft':
@@ -75,3 +89,46 @@ function moveUser(e) {
     }
 }
 document.addEventListener('keydown', moveUser);
+
+const ball = document.createElement('div');
+ball.classList.add('ball');
+drawBall();
+grid.appendChild(ball);
+
+function moveBall() {
+    ballCurrentPosition[0] += xDirection;
+    ballCurrentPosition[1] += yDirection;
+    drawBall();
+    checkForCollosions();
+}
+timerId = setInterval(moveBall, 10);
+
+function checkForCollosions() {
+    if (ballCurrentPosition[0] >= (boardWidth - ballDiameter) || ballCurrentPosition[1] >= (boardHeight - ballDiameter) || ballCurrentPosition[0] <= 0) {
+        changeDirection();
+    }
+    if (ballCurrentPosition[1] <= 0) {
+        clearInterval(timerId);
+        scoreDisplay.innerHTML = 'You lose';
+        document.removeEventListener('keydown', moveUser);
+    }
+}
+
+function changeDirection() {
+    if (xDirection === 4 && yDirection === 4) {
+        yDirection = -4;
+        return;
+    }
+    if (xDirection === 4 && yDirection === -4) {
+        xDirection = -4;
+        return;
+    }
+    if (xDirection === -4 && yDirection === -4) {
+        yDirection = 4;
+        return;
+    }
+    if (xDirection === -4 && yDirection === 4) {
+        xDirection = 4;
+        return;
+    }
+}
